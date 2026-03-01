@@ -7,6 +7,7 @@ import CheckboxGroup from "@/components/CheckboxGroup";
 import { ArquetipoData, emptyArquetipo } from "@/types/arquetipo";
 import { toast } from "sonner";
 import posthog from "posthog-js";
+import { sendArquetipoEmail } from "@/lib/email";
 
 const stepLabels = ["Perfil", "Preferencias", "Hábitos", "Psicología"];
 
@@ -14,6 +15,7 @@ const Crear = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<ArquetipoData>(emptyArquetipo);
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const update = <K extends keyof ArquetipoData>(key: K, value: ArquetipoData[K]) => {
@@ -24,7 +26,6 @@ const Crear = () => {
 
   const next = () => {
     if (step < 4) {
-      // ANALYTICS: registramos el paso completado antes de avanzar
       posthog.capture("wizard_step_completed", {
         step,
         step_name: stepNames[step - 1],
@@ -36,11 +37,11 @@ const Crear = () => {
   const prev = () => step > 1 && setStep(step - 1);
 
   const generateArchetype = async () => {
-    // ANALYTICS: el usuario llegó al final y hace clic en generar
     posthog.capture("arquetipo_generation_started", {
       fields_filled: Object.values(data).filter((v) =>
         Array.isArray(v) ? v.length > 0 : v !== ""
       ).length,
+      has_email: !!email,
     });
 
     setLoading(true);
@@ -54,7 +55,7 @@ const Crear = () => {
     }
 
     const systemPrompt = "Sos un experto en marketing digital. Con los datos del formulario generá un arquetipo de cliente completo. Respondé SOLO con JSON válido, sin markdown, sin explicaciones, con estos campos: nombre, edad, residencia, ocupacion, nivel_educativo, estado_civil, modalidad_laboral, nivel_socioeconomico, pasatiempos, contenido_digital, temas_sociales, que_busca_en_marca, redes, frecuencia, influencers, ecommerce, busca_en_servicio, sentimientos, evita, valores, miedos, deseos.";
-    
+
     const userPrompt = `Datos del formulario:
     - Nombre sugerido: ${data.nombre}
     - Edad: ${data.edad}
@@ -86,19 +87,9 @@ const Crear = () => {
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `${systemPrompt}\n\n${userPrompt}`,
-                  },
-                ],
-              },
-            ],
+            contents: [{ parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
           }),
         }
       );
@@ -107,21 +98,30 @@ const Crear = () => {
 
       const result = await response.json();
       const textResponse = result.candidates[0].content.parts[0].text;
-      
-      // Clean potential markdown from response
       const jsonText = textResponse.replace(/```json|```/g, "").trim();
       const archetypeResult = JSON.parse(jsonText);
 
-      // ANALYTICS: generación exitosa — métrica de activación principal
       posthog.capture("arquetipo_generated_successfully", {
         generation_time_ms: Date.now() - startTime,
         nombre: archetypeResult.nombre,
       });
 
+      // ANALYTICS + EMAIL: si el usuario dejó su email, enviamos el arquetipo
+      if (email) {
+        const emailResult = await sendArquetipoEmail(email, archetypeResult);
+        if (emailResult.success) {
+          posthog.capture("arquetipo_email_sent", { nombre: archetypeResult.nombre });
+          toast.success("¡Arquetipo enviado a tu email!");
+        } else {
+          // Fail silencioso — el producto sigue funcionando aunque falle el email
+          console.warn("Email no enviado:", emailResult.error);
+          posthog.capture("arquetipo_email_failed", { error: emailResult.error });
+        }
+      }
+
       navigate("/resultado", { state: archetypeResult });
     } catch (error) {
       console.error("Gemini Error:", error);
-      // ANALYTICS: fallo — ayuda a detectar problemas de API o de parsing
       posthog.capture("arquetipo_generation_failed", {
         error_message: error instanceof Error ? error.message : "unknown",
         generation_time_ms: Date.now() - startTime,
@@ -134,15 +134,14 @@ const Crear = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-primary/3 blur-[120px]" />
       </div>
 
       {/* Nav */}
       <nav className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6 max-w-5xl mx-auto">
-        <button 
-          onClick={() => navigate("/")} 
+        <button
+          onClick={() => navigate("/")}
           disabled={loading}
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
         >
@@ -177,6 +176,19 @@ const Crear = () => {
                 <FormField label="Estado civil" value={data.estado_civil} onChange={(v) => update("estado_civil", v)} type="select" options={["Soltero/a", "En pareja", "Casado/a", "Divorciado/a", "Viudo/a"]} />
                 <FormField label="Modalidad laboral" value={data.modalidad_laboral} onChange={(v) => update("modalidad_laboral", v)} type="select" options={["Relación de dependencia", "Independiente", "Freelancer", "Desempleado/a", "Estudiante"]} />
                 <FormField label="Nivel socioeconómico" value={data.nivel_socioeconomico} onChange={(v) => update("nivel_socioeconomico", v)} type="select" options={["Bajo", "Medio-bajo", "Medio", "Medio-alto", "Alto"]} />
+
+                {/* EMAIL: campo opcional para recibir el arquetipo por correo */}
+                <div className="md:col-span-2">
+                  <FormField
+                    label="Tu email (opcional)"
+                    value={email}
+                    onChange={setEmail}
+                    placeholder="Recibí tu arquetipo en tu correo"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1.5 ml-0.5">
+                    Si completás este campo, te enviamos el arquetipo generado a tu email.
+                  </p>
+                </div>
               </>
             )}
 
