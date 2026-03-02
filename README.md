@@ -11,7 +11,7 @@
 | 🌐 **Producto** | [arquetipo-ia-marketing-digital.vercel.app](https://arquetipo-ia-marketing-digital.vercel.app) |
 | 🐙 **Repositorio** | [github.com/MafeTech24/arquetipo-ia-marketing-digital](https://github.com/MafeTech24/arquetipo-ia-marketing-digital) |
 | 📊 **Deck** | [ArquetipoIA-Distribucion.pptx](https://docs.google.com/presentation/d/1-gTl6BRAmxePIJ67QI1cVJHfpp5DXJ_I/edit?usp=sharing&ouid=117682127268315219527&rtpof=true&sd=true) |
-| 📋 **Documentación** | [ArquetipoIA-Documentacion.pdf](docs/ArquetipoIA-Documentacion.pdf) |
+| 📋 **Documentación** | [ArquetipoIA-Documentacion.pdf](mkdir/docs/ArquetipoIA-Documentacion.pdf) |
 
 ---
 ## 📸 Screenshots
@@ -54,7 +54,10 @@
 
 ### 📄 Ejemplo de Output
 
-![Ver PDF de ejemplo — Arquetipo Laura Torres](mkdir/docs/Arquetipo-Laura-Torres.pdf)
+
+[Ver PDF de ejemplo — Arquetipo Laura Torres](mkdir/docs/Arquetipo-Laura-Torres.pdf)
+
+
 
 
 ## 1. Resumen Ejecutivo
