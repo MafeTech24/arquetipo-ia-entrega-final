@@ -21,7 +21,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // SUPUESTO: el dominio de envío es onboarding@resend.dev (dominio de prueba gratuito de Resend)
-  // DECISIÓN POSTERGADA: configurar dominio propio cuando el producto escale
+  // DECISIÓN POSTERGADA: configurar dominio propio para enviar a cualquier email cuando escale
+  // HACK: en plan gratuito de Resend solo se puede enviar al email del owner de la cuenta.
+  // Por eso enviamos siempre a mafe4024@gmail.com como notificación interna de nuevo arquetipo generado.
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -30,8 +32,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     },
     body: JSON.stringify({
       from: "ArquetipoIA <onboarding@resend.dev>",
-      to: [email],
-      subject: `Tu Arquetipo de Cliente: ${arquetipo.nombre}`,
+      to: ["mafe4024@gmail.com"],
+      subject: `Nuevo arquetipo generado: ${arquetipo.nombre} (solicitado por ${email})`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0A0A14; color: #f0eeff; padding: 32px; border-radius: 12px;">
           
