@@ -17,12 +17,12 @@
 ## 📸 Screenshots
 
 ### Landing:
-![Landing](mkdir/docs/landing.jpg)
+![Landing](mkdir/docs/landingArquetipo.jpg)
 
 
 ### Resultado generado por IA:
 
-![Resultado](mkdir/docs/resultado.jpg)
+![Resultado](mkdir/docs/resultadoArquetipo.jpg)
 
 
 ### Email recibido vía Resend:
