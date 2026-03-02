@@ -10,10 +10,52 @@
 |---|---|
 | 🌐 **Producto** | [arquetipo-ia-marketing-digital.vercel.app](https://arquetipo-ia-marketing-digital.vercel.app) |
 | 🐙 **Repositorio** | [github.com/MafeTech24/arquetipo-ia-marketing-digital](https://github.com/MafeTech24/arquetipo-ia-marketing-digital) |
-| 🎬 **Video Demo** | *(agregar link — máx. 2 min)* |
-| 📊 **Deck** | *(agregar link al deck de 5 slides)* |
+| 📊 **Deck** | [ArquetipoIA-Distribucion.pptx](https://docs.google.com/presentation/d/1-gTl6BRAmxePIJ67QI1cVJHfpp5DXJ_I/edit?usp=sharing&ouid=117682127268315219527&rtpof=true&sd=true) |
+| 📋 **Documentación** | [ArquetipoIA-Documentacion.pdf](docs/ArquetipoIA-Documentacion.pdf) |
 
 ---
+## 📸 Screenshots
+
+### Landing:
+![Landing](mkdir/docs/landing.jpg)
+
+
+### Resultado generado por IA:
+
+![Resultado](mkdir/docs/resultado.jpg)
+
+
+### Email recibido vía Resend:
+
+
+
+![mail1.jpg](mkdir/docs/mail1.jpg)
+
+
+
+
+![mail2.jpg](mkdir/docs/mail2.jpg)
+
+
+
+
+
+![mail3.jpg](mkdir/docs/mail3.jpg)
+
+
+
+
+### PostHog — Eventos trackeados en producción:
+
+
+![resultadoArquetipo.jpg](mkdir/docs/resultadoArquetipo.jpg)
+
+
+
+### 📄 Ejemplo de Output
+
+![Ver PDF de ejemplo — Arquetipo Laura Torres](mkdir/docs/Arquetipo-Laura-Torres.pdf)
+
 
 ## 1. Resumen Ejecutivo
 
