@@ -392,4 +392,6 @@ valores, miedos, deseos.
 ## 👩‍💻 Autora
 
 **María Fernanda Moreno — MafeTech**  
-[mafetech.vercel.app](https://mafetech.vercel.app) · [linkedin.com/in/mafetechdev](https://www.linkedin.com/in/mafetechdev/) · [showcase](https://showcase-de-automatizaciones-y-webs.vercel.app)
+- [mafetech.vercel.app](https://mafetech.vercel.app)
+- [linkedin.com/in/mafetechdev](https://www.linkedin.com/in/mafetechdev/)
+- [showcase](https://showcase-de-automatizaciones-y-webs.vercel.app)
