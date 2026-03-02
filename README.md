@@ -8,8 +8,8 @@
 
 | | |
 |---|---|
-| 🌐 **Producto** | [arquetipo-ia-marketing-digital.vercel.app](https://arquetipo-ia-marketing-digital.vercel.app) |
-| 🐙 **Repositorio** | [github.com/MafeTech24/arquetipo-ia-marketing-digital](https://github.com/MafeTech24/arquetipo-ia-marketing-digital) |
+| 🌐 **Producto** | [arquetipo-ia-entrega-final.vercel.app](https://arquetipo-ia-entrega-final.vercel.app/) |
+| 🐙 **Repositorio** | [github.com/MafeTech24/arquetipo-ia-entrega-final](https://github.com/MafeTech24/arquetipo-ia-entrega-final) |
 | 📊 **Deck** | [ArquetipoIA-Distribucion.pptx](https://docs.google.com/presentation/d/1-gTl6BRAmxePIJ67QI1cVJHfpp5DXJ_I/edit?usp=sharing&ouid=117682127268315219527&rtpof=true&sd=true) |
 | 📋 **Documentación** | [ArquetipoIA-Documentacion.pdf](mkdir/docs/ArquetipoIA-Documentacion.pdf) |
 
@@ -48,14 +48,18 @@
 ### PostHog — Eventos trackeados en producción:
 
 
-![resultadoArquetipo.jpg](mkdir/docs/resultadoArquetipo.jpg)
+![resultadoArquetipo.jpg](mkdir/docs/eventoPosthog.jpg)
 
 
 
 ### 📄 Ejemplo de Output
 
 
+
 [Ver PDF de ejemplo — Arquetipo Laura Torres](mkdir/docs/Arquetipo-Laura-Torres.pdf)
+
+
+
 
 
 
@@ -384,8 +388,7 @@ valores, miedos, deseos.
 - [x] Supuestos con señales de alerta
 - [x] `.env.example` en el repositorio
 - [x] Link al producto funcional
-- [ ] Video demo (máx. 2 min)
-- [ ] Link al deck de distribución
+- [x] Link al deck de distribución
 
 ---
 
