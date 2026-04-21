@@ -58,8 +58,12 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground;
     font-family: 'Inter', sans-serif;
   }
 
@@ -70,7 +74,7 @@
 
 @layer utilities {
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-xl;
+    @apply bg-[rgba(15,15,20,0.7)] backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
 
   .glass-card-hover {
